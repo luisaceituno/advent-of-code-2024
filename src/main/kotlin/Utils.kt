@@ -8,9 +8,9 @@ import java.net.http.HttpResponse
 import java.nio.file.Files
 
 fun runWithInput(day: Int, block: (input: String) -> Unit) {
-    val inputForDay = readStringFromCacheFile("$day.txt") ?: getInputFromWebsite(day).also {
-        writeStringToCacheFile("$day.txt", it)
-    }
+    val inputForDay = readStringFromCacheFile("$day.txt")
+        ?: getInputFromWebsite(day)?.also { writeStringToCacheFile("$day.txt", it) }
+        ?: getInputFromStdIn()
     block(inputForDay)
 }
 
@@ -28,14 +28,27 @@ private fun writeStringToCacheFile(fileName: String, content: String) {
     }
 }
 
-private fun getInputFromWebsite(day: Int): String {
+private fun getInputFromWebsite(day: Int): String? {
     println("Input not found in cache, fetching...")
     val sessionId = System.getenv("AOC_SESSION_ID")
-        ?: error("Please copy/paste the value of the advent of code website session cookie into the environment variable AOC_SESSION_ID")
+    if (sessionId == null) {
+        println("Please copy/paste the value of the advent of code website session cookie into the environment variable AOC_SESSION_ID so I can grab your input for you!")
+        return null
+    }
     val requestForInput = HttpRequest.newBuilder()
         .uri(URI("https://adventofcode.com/2024/day/${day}/input"))
         .header("Cookie", "session=$sessionId")
         .build()
     val inputResponse = HttpClient.newHttpClient().send(requestForInput, HttpResponse.BodyHandlers.ofString())
     return inputResponse.body()
+}
+
+fun getInputFromStdIn(): String {
+    println("Please enter the input (end with Ctrl/Cmd + D):")
+    val input = StringBuilder()
+    while (true) {
+        val line = readlnOrNull() ?: break
+        input.appendLine(line)
+    }
+    return input.toString().trim()
 }
