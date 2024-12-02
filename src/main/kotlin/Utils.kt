@@ -10,7 +10,12 @@ import java.nio.file.Files
 fun runWithInput(day: Int, block: (input: String) -> Unit) {
     val inputForDay = readStringFromCacheFile("$day.txt")
         ?: getInputFromWebsite(day)?.also { writeStringToCacheFile("$day.txt", it) }
-        ?: getInputFromStdIn()
+        ?: getInputFromStdin()
+    block(inputForDay)
+}
+
+fun runWithInputFromStdin(day: Int, block: (input: String) -> Unit) {
+    val inputForDay = getInputFromStdin()
     block(inputForDay)
 }
 
@@ -43,7 +48,7 @@ private fun getInputFromWebsite(day: Int): String? {
     return inputResponse.body()
 }
 
-fun getInputFromStdIn(): String {
+fun getInputFromStdin(): String {
     println("Please enter the input (end with Ctrl/Cmd + D):")
     val input = StringBuilder()
     while (true) {
