@@ -24,9 +24,9 @@ fun main() = runWithInput(3) { input ->
     }
     val result2 = dos.sumOf {
         val partInstructions = regex.findAll(it)
-        partInstructions.sumOf {
-            val s1 = it.groupValues[1].toInt()
-            val s2 = it.groupValues[2].toInt()
+        partInstructions.sumOf { inst ->
+            val s1 = inst.groupValues[1].toInt()
+            val s2 = inst.groupValues[2].toInt()
             s1 * s2
         }
     }
