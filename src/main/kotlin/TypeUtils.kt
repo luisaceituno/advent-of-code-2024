@@ -19,5 +19,6 @@ fun <T> List<List<T>>.at(y: Int, x: Int) = getOrNull(y)?.getOrNull(x)
 fun <T> List<List<T>>.at(pos: Pos) = at(pos.y, pos.x)
 fun <T> List<List<T>>.coords() = indices.flatMap { y -> get(y).indices.map { x -> Pos(y, x) } }
 
+fun String.chunkedByEmptyLine() = trim().split("\n\n").map(String::lines)
 fun List<String>.nonBlank() = filter { it.isNotBlank() }
 fun List<String>.matrix() = map { it.toList() }
