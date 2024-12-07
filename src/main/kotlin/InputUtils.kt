@@ -6,17 +6,14 @@ import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 import java.nio.file.Files
+import kotlin.time.measureTime
 
 fun runWithInput(day: Int, block: (input: String) -> Unit) {
     val inputForDay = readStringFromCacheFile("$day.txt")
         ?: getInputFromWebsite(day)?.also { writeStringToCacheFile("$day.txt", it) }
         ?: getInputFromStdin()
-    block(inputForDay)
-}
-
-fun runWithInputFromStdin(day: Int, block: (input: String) -> Unit) {
-    val inputForDay = getInputFromStdin()
-    block(inputForDay)
+    val runtime = measureTime { block(inputForDay) }
+    println("Took ${runtime.inWholeMilliseconds} ms")
 }
 
 private fun readStringFromCacheFile(fileName: String): String? = File("cache/${fileName}").let {
