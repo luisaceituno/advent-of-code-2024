@@ -10,11 +10,11 @@ fun main() = runWithInput(7) { input ->
                 .map { value -> value.toLong() }
         }
 
-    fun canBeFulfilled(operands: List<Long>, operations: List<Long.(Long) -> Long>): Boolean {
+    fun canBeFulfilled(operands: List<Long>, operations: List<(Long, Long) -> Long>): Boolean {
         val target = operands[0]
-        var lastResults = setOf(operands[1])
+        var lastResults = listOf(operands[1])
         for (operand in operands.drop(2)) {
-            val nextResults = mutableSetOf<Long>()
+            val nextResults = mutableListOf<Long>()
             for (lastResult in lastResults) {
                 for (operation in operations) {
                     val nextResult = operation(lastResult, operand)
