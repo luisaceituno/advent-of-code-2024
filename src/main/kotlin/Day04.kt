@@ -31,5 +31,3 @@ fun main() = runWithInput(4) { input ->
     }
     println("Part 2: $countCrossed")
 }
-
-data class Search(val pos: Pos, val dir: Dir, val found: Int)
