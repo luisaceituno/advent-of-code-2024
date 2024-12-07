@@ -26,14 +26,15 @@ fun main() = runWithInput(7) { input ->
         return target in lastResults
     }
 
-    val concatOp = { n1: Long, n2: Long -> "$n1$n2".toLong() }
     var resultSumTimes = 0L
     var resultSumTimesConcat = 0L
     for (equation in equations) {
         if (canBeFulfilled(equation, listOf(Long::plus, Long::times))) resultSumTimes += equation[0]
-        if (canBeFulfilled(equation, listOf(Long::plus, Long::times, concatOp))) resultSumTimesConcat += equation[0]
+        if (canBeFulfilled(equation, listOf(Long::plus, Long::times, Long::concat))) resultSumTimesConcat += equation[0]
     }
 
     println("Part 1: $resultSumTimes")
     println("Part 2: $resultSumTimesConcat")
 }
+
+fun Long.concat(other: Long): Long = "$this$other".toLong()
