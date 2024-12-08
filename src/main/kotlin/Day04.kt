@@ -9,7 +9,7 @@ fun main() = runWithInput(4) { input ->
         if (field.at(pos) != remaining[0]) return 0
         return search(pos.move(dir), dir, remaining.drop(1))
     }
-    for (pos in field.coords()) {
+    for (pos in field.positions()) {
         if (field.at(pos) == 'X') {
             count += Dir.entries.sumOf { dir -> search(pos.move(dir), dir, "MAS") }
         }
@@ -18,7 +18,7 @@ fun main() = runWithInput(4) { input ->
 
     var countCrossed = 0
     val combos = listOf("MS", "SM")
-    for (pos in field.coords()) {
+    for (pos in field.positions()) {
         if (field.at(pos) == 'A') {
             val ur = field.at(pos.move(Dir.UR))
             val dl = field.at(pos.move(Dir.DL))
