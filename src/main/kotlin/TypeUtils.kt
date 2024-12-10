@@ -5,6 +5,7 @@ data class Pos(val y: Int, val x: Int) {
     fun deltaTo(other: Pos) = Pos(other.y - y, other.x - x)
     fun add(other: Pos) = Pos(other.y + y, other.x + x)
     fun inverted() = Pos(-y, -x)
+    fun cross() = listOf(move(Dir.L), move(Dir.R), move(Dir.U), move(Dir.D))
 }
 
 enum class Dir(val y: Int, val x: Int) {
@@ -49,3 +50,4 @@ fun <T> List<List<T>>.findPos(predicate: (el: T) -> Boolean): Pos? {
 fun String.chunkedByEmptyLine() = trim().split("\n\n").map(String::lines)
 fun List<String>.nonBlank() = filter { it.isNotBlank() }
 fun List<String>.matrix() = map { it.toList() }
+fun <T> List<String>.matrix(fieldMapper: (Char) -> T) = map { it.map(fieldMapper) }
