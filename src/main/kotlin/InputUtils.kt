@@ -42,7 +42,7 @@ private fun getInputFromWebsite(day: Int): String? {
         .header("Cookie", "session=$sessionId")
         .build()
     val inputResponse = HttpClient.newHttpClient().send(requestForInput, HttpResponse.BodyHandlers.ofString())
-    return inputResponse.body()
+    return inputResponse.body().trim()
 }
 
 fun getInputFromStdin(): String {
