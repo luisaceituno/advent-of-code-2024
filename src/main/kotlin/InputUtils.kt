@@ -17,7 +17,7 @@ fun runWithInput(day: Int, block: (input: String) -> Unit) {
 }
 
 private fun readStringFromCacheFile(fileName: String): String? = File("cache/${fileName}").let {
-    if (it.exists()) it.readText()
+    if (it.exists()) it.readText().trim()
     else null
 }
 
