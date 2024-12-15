@@ -49,6 +49,8 @@ fun <T> List<List<T>>.findPos(predicate: (el: T) -> Boolean): Pos? {
 
 fun String.chunkedByEmptyLine() = trim().split("\n\n").map(String::lines)
 fun String.matrix() = lines().matrix()
+fun String.ints() = Regex("\\+?-?\\d+").findAll(this).map { it.value.toInt() }.toList()
+fun String.longs() = Regex("\\+?-?\\d+").findAll(this).map { it.value.toLong() }.toList()
 fun List<String>.nonBlank() = filter { it.isNotBlank() }
 fun List<String>.matrix() = map { it.toList() }
 fun <T> List<String>.matrix(fieldMapper: (Char) -> T) = map { it.map(fieldMapper) }
