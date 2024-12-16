@@ -4,6 +4,15 @@ data class Pos(val y: Int, val x: Int) {
     fun move(dir: Dir) = Pos(y + dir.y, x + dir.x)
     fun deltaTo(other: Pos) = Pos(other.y - y, other.x - x)
     fun add(other: Pos) = Pos(other.y + y, other.x + x)
+    fun addWrapping(other: Pos, wrapY: Int, wrapX: Int): Pos {
+        val nextY = (other.y + y) % wrapY
+        val nextX = (other.x + x) % wrapX
+        return Pos(
+            if (nextY < 0) nextY + wrapY else nextY,
+            if (nextX < 0) nextX + wrapX else nextX
+        )
+    }
+
     fun inverted() = Pos(-y, -x)
     fun cross() = listOf(move(Dir.L), move(Dir.R), move(Dir.U), move(Dir.D))
 }
