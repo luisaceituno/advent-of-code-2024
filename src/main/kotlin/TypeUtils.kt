@@ -37,6 +37,16 @@ enum class Dir(val y: Int, val x: Int) {
         D -> L
         DR -> DL
     }
+
+    companion object {
+        fun from(char: Char) = when (char) {
+            '<' -> L
+            '>' -> R
+            '^' -> U
+            'v' -> D
+            else -> null
+        }
+    }
 }
 
 fun <T> List<List<T>>.at(y: Int, x: Int) = getOrNull(y)?.getOrNull(x)
