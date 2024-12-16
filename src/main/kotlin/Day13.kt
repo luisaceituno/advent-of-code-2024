@@ -26,7 +26,7 @@ fun main() = runWithInput(13) { input ->
     println("Part 2: $part2")
 }
 
-data class Machine(
+private data class Machine(
     val aY: Long,
     val aX: Long,
     val bY: Long,
@@ -35,7 +35,7 @@ data class Machine(
     val targetX: Long
 )
 
-fun calculateCost(aY: Long, aX: Long, bY: Long, bX: Long, targetY: Long, targetX: Long): Long {
+private fun calculateCost(aY: Long, aX: Long, bY: Long, bX: Long, targetY: Long, targetX: Long): Long {
     val coefficients = mk.ndarray(mk[mk[aY, bY], mk[aX, bX]])
     val targets = mk.ndarray(mk[targetY, targetX])
     val result = DefaultLinAlg.solve(coefficients, targets)
