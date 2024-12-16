@@ -10,7 +10,7 @@ fun main() = runWithInput(9) { input ->
     println("Part 2: ${calculateChecksum(blocks.toMutableList().compressedWithoutFragmentation())}")
 }
 
-sealed interface Block {
+private sealed interface Block {
     data class File(val index: Int, val size: Int) : Block
     data class Space(val size: Int) : Block {
         fun fillWith(file: File): Triple<File?, Space?, File?> {
@@ -44,7 +44,7 @@ private fun MutableList<Block>.compressedWithFragmentation(): MutableList<Block>
     return this
 }
 
-fun MutableList<Block>.compressedWithoutFragmentation(): MutableList<Block> {
+private fun MutableList<Block>.compressedWithoutFragmentation(): MutableList<Block> {
     for (block in this.reversed()) {
         if (block is Block.File) {
             for (i in this.indices) {
