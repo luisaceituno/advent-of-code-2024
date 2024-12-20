@@ -45,3 +45,4 @@ bin/
 ### Local-only stuff
 /.envrc
 cache/
+/src/test/kotlin/Sandbox.kt
