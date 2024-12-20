@@ -9,8 +9,8 @@ fun main() = runWithInput(17) { input ->
 
     // got inspired from reddit for this one - I'm not smart enough :)
     fun findMagicA(currentA: Long = 0): Long? =
-        (currentA..currentA + 8).firstNotNullOfOrNull { a ->
-            val output = runProgram(program, a)
+        (currentA..currentA + 7).firstNotNullOfOrNull { a ->
+            val output = runProgram(program, a).toList()
             if (program.takeLast(output.size) == output) {
                 if (program == output) a else findMagicA(maxOf(a shl 3, 8))
             } else {
@@ -27,8 +27,7 @@ fun runProgram(
     initA: Long,
     initB: Long = 0,
     initC: Long = 0,
-): List<Int> {
-    val output = mutableListOf<Int>()
+) = sequence<Int> {
     var pointer = 0
     var workingA = initA
     var workingB = initB
@@ -54,12 +53,10 @@ fun runProgram(
             }
 
             4 -> workingB = workingB xor workingC
-            5 -> output.add((combo(operand) % 8).toInt())
+            5 -> yield((combo(operand) % 8).toInt())
             6 -> workingB = workingA shr combo(operand).toInt()
             7 -> workingC = workingA shr combo(operand).toInt()
         }
         pointer += 2
     }
-
-    return output
 }
