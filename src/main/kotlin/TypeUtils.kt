@@ -1,5 +1,7 @@
 package dev.aceituno
 
+import kotlin.math.abs
+
 data class Pos(val y: Int, val x: Int) {
     fun move(dir: Dir) = Pos(y + dir.y, x + dir.x)
     fun deltaTo(other: Pos) = Pos(other.y - y, other.x - x)
@@ -15,6 +17,7 @@ data class Pos(val y: Int, val x: Int) {
 
     fun inverted() = Pos(-y, -x)
     fun cross() = listOf(move(Dir.L), move(Dir.R), move(Dir.U), move(Dir.D))
+    fun manhattanTo(other: Pos) = abs(other.y - y) + abs(other.x - x)
 }
 
 enum class Dir(val y: Int, val x: Int) {
